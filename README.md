@@ -16,6 +16,6 @@ Dabali est une application de recettes Flutter inspirée de la cuisine ivoirienn
 ## 📱 Aperçu
 Bientôt
 
-## 👩🏽‍💻 Auteure
+## 👩🏽‍💻 Auteur
 
 Arielle KOUASSI
