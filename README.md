@@ -1,16 +1,21 @@
-# menu_app
+# 🍽️ Dabali CI
 
-A new Flutter project.
+Dabali est une application de recettes Flutter inspirée de la cuisine ivoirienne 🇨🇮
 
-## Getting Started
+## 🚀 Fonctionnalités
+- Navigation en bas de l'écran
+- Liste des recettes
+- Page de détails de la recette
+- Système de favoris
+- Fonction de recherche
 
-This project is a starting point for a Flutter application.
+## 🧰 Technologies utilisées
+- Flutter
+- Dart
 
-A few resources to get you started if this is your first Flutter project:
+## 📱 Aperçu
+Bientôt
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 👩🏽‍💻 Auteure
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Arielle KOUASSI
