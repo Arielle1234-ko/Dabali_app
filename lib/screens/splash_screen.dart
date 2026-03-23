@@ -50,17 +50,17 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               alignment: Alignment.center,
               child: const Text(
-                "A'",
+                'dA',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 34,
+                  fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             const SizedBox(height: 18),
             const Text(
-              "dAbAli CI",
+              'dAbAli',
               style: TextStyle(
                 color: Color(0xff1F2937),
                 fontSize: 26,

@@ -7,6 +7,7 @@ class HomeScreen extends StatelessWidget {
   final List<Recipe> recipes;
   final VoidCallback onViewAll;
   final VoidCallback onProfileTap;
+  final VoidCallback onEthnicCuisinesTap;
   final ValueChanged<String> onToggleFavorite;
   final ValueChanged<Recipe> onRecipeTap;
   final ValueChanged<String> onCategoryTap;
@@ -16,6 +17,7 @@ class HomeScreen extends StatelessWidget {
     required this.recipes,
     required this.onViewAll,
     required this.onProfileTap,
+    required this.onEthnicCuisinesTap,
     required this.onToggleFavorite,
     required this.onRecipeTap,
     required this.onCategoryTap,
@@ -80,7 +82,7 @@ class HomeScreen extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: const Text(
-                "A'",
+                'dA',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -221,6 +223,80 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(24),
+                  onTap: onEthnicCuisinesTap,
+                  child: Ink(
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 18,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 54,
+                          height: 54,
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [Color(0xffFF6B00), Color(0xffFF9C55)],
+                            ),
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          alignment: Alignment.center,
+                          child: const Icon(
+                            Icons.public_rounded,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 14),
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Plats des differentes ethnies",
+                                style: TextStyle(
+                                  color: Color(0xff111827),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                "Explorez la cuisine ivoirienne par peuple et par region.",
+                                style: TextStyle(
+                                  color: Color(0xff6B7280),
+                                  fontSize: 13,
+                                  height: 1.4,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.chevron_right,
+                          color: Color(0xff9CA3AF),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

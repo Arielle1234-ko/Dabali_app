@@ -4,6 +4,7 @@ import '../data/recipes_data.dart';
 import '../models/recipe.dart';
 import '../widgets/bottom_nav.dart';
 import 'detail_screen.dart';
+import 'ethnic_cuisines_screen.dart';
 import 'favorites_screen.dart';
 import 'home_screen.dart';
 import 'profile_screen.dart';
@@ -70,6 +71,15 @@ class _MainNavigationState extends State<MainNavigation> {
     );
   }
 
+  void openEthnicCuisines() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EthnicCuisinesScreen(recipes: recipes),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final pages = [
@@ -77,6 +87,7 @@ class _MainNavigationState extends State<MainNavigation> {
         recipes: recipes,
         onViewAll: () => onTap(1),
         onProfileTap: () => onTap(3),
+        onEthnicCuisinesTap: openEthnicCuisines,
         onToggleFavorite: toggleFavorite,
         onRecipeTap: openRecipe,
         onCategoryTap: openRecipesCategory,

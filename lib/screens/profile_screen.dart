@@ -173,7 +173,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   const Text(
-                    " dAbAli v1.0.0",
+                    'dAbAli v1.0.0',
                     style: TextStyle(
                       color: Color(0xff9CA3AF),
                       fontSize: 13,
@@ -181,7 +181,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   const Text(
-                    '(c) 2026 Cuisine Ivoirienne',
+                    '(c) 2026 dAbAli',
                     style: TextStyle(
                       color: Color(0xff9CA3AF),
                       fontSize: 13,

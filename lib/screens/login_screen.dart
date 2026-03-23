@@ -31,7 +31,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 alignment: Alignment.center,
                 child: const Text(
-                  "N'",
+                  'dA',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 28,
