@@ -82,7 +82,7 @@ class HomeScreen extends StatelessWidget {
               ),
               alignment: Alignment.center,
               child: const Text(
-                'dA',
+                "O'",
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -91,7 +91,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             const Text(
-              "dAbAli",
+              "O'dAbAli",
               style: TextStyle(
                 color: Color(0xff1F2937),
                 fontWeight: FontWeight.bold,

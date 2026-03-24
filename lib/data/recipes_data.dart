@@ -10,7 +10,6 @@ const List<Recipe> initialRecipes = [
     time: 45,
     servings: 2,
     difficulty: 'Moyen',
-    isFavorite: true,
     ingredients: [
       "300 g d'attieke",
       '2 poissons frits',
@@ -65,7 +64,6 @@ const List<Recipe> initialRecipes = [
     time: 30,
     servings: 1,
     difficulty: 'Facile',
-    isFavorite: true,
     ingredients: [
       "200 g d'attieke",
       '1 filet de thon',
@@ -92,7 +90,6 @@ const List<Recipe> initialRecipes = [
     time: 50,
     servings: 4,
     difficulty: 'Moyen',
-    isFavorite: true,
     ingredients: [
       '400 g de riz',
       '2 morceaux de poisson',
