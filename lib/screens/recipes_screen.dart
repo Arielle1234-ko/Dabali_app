@@ -54,6 +54,10 @@ class _RecipesScreenState extends State<RecipesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final surfaceColor = isDark ? const Color(0xff1F2937) : Colors.white;
+    final inputColor = isDark ? const Color(0xff111827) : const Color(0xffF3F4F6);
+
     const preferredOrder = ['Plats', 'Entrees', 'Desserts', 'Boissons'];
     final availableCategories = {
       for (final recipe in widget.recipes) recipe.category,
@@ -80,17 +84,17 @@ class _RecipesScreenState extends State<RecipesScreen> {
     }).toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xffF5F5F5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
           Container(
-            color: const Color(0xffF5F5F5),
+            color: Theme.of(context).scaffoldBackgroundColor,
             padding: const EdgeInsets.fromLTRB(16, 52, 16, 12),
             child: Column(
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xffF3F4F6),
+                    color: inputColor,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: Colors.transparent),
                   ),
@@ -141,11 +145,15 @@ class _RecipesScreenState extends State<RecipesScreen> {
                           decoration: BoxDecoration(
                             color: isSelected
                                 ? const Color(0xffFF6B00)
-                                : Colors.white,
+                                : surfaceColor,
                             borderRadius: BorderRadius.circular(999),
                             border: isSelected
                                 ? null
-                                : Border.all(color: const Color(0xffE5E7EB)),
+                                : Border.all(
+                                    color: isDark
+                                        ? const Color(0xff374151)
+                                        : const Color(0xffE5E7EB),
+                                  ),
                           ),
                           child: Text(
                             category,

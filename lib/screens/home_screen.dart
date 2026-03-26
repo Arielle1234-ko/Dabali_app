@@ -25,6 +25,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardColor = isDark ? const Color(0xff1F2937) : Colors.white;
+    final titleColor = isDark ? Colors.white : const Color(0xff1F2937);
+    final subtitleColor = isDark
+        ? const Color(0xffD1D5DB)
+        : const Color(0xff6B7280);
+    final mutedColor = isDark
+        ? const Color(0xff9CA3AF)
+        : const Color(0xff4B5563);
+
     final categoryCount = <String, int>{};
     for (final recipe in recipes) {
       categoryCount[recipe.category] =
@@ -66,45 +76,27 @@ class HomeScreen extends StatelessWidget {
     final favoriteCount = recipes.where((recipe) => recipe.isFavorite).length;
 
     return Scaffold(
-      backgroundColor: const Color(0xffF5F5F5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: cardColor,
+        toolbarHeight: 82,
         elevation: 1,
-        surfaceTintColor: Colors.white,
-        title: Row(
-          children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(
-                color: Color(0xffFF6B00),
-                shape: BoxShape.circle,
-              ),
-              alignment: Alignment.center,
-              child: const Text(
-                "O'",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            const Text(
+        surfaceTintColor: Colors.transparent,
+        centerTitle: true,
+        title: Image.asset(
+          'assets/logo.png',
+          height: 150,
+          fit: BoxFit.contain,
+          errorBuilder: (context, error, stackTrace) {
+            return Text(
               "O'dAbAli",
               style: TextStyle(
-                color: Color(0xff1F2937),
+                color: isDark ? Colors.white : const Color(0xff1F2937),
                 fontWeight: FontWeight.bold,
               ),
-            ),
-          ],
+            );
+          },
         ),
-        actions: [
-          IconButton(
-            onPressed: onProfileTap,
-            icon: const Icon(Icons.person_outline, color: Color(0xff4B5563)),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -192,10 +184,10 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Categories',
                       style: TextStyle(
-                        color: Color(0xff1F2937),
+                        color: titleColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -234,11 +226,11 @@ class HomeScreen extends StatelessWidget {
                   child: Ink(
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: cardColor,
                       borderRadius: BorderRadius.circular(24),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
+                          color: Colors.black.withValues(alpha: isDark ? 0.16 : 0.05),
                           blurRadius: 18,
                           offset: const Offset(0, 8),
                         ),
@@ -262,14 +254,14 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 14),
-                        const Expanded(
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Plats des differentes ethnies",
                                 style: TextStyle(
-                                  color: Color(0xff111827),
+                                  color: titleColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -278,7 +270,7 @@ class HomeScreen extends StatelessWidget {
                               Text(
                                 "Explorez la cuisine ivoirienne par peuple et par region.",
                                 style: TextStyle(
-                                  color: Color(0xff6B7280),
+                                  color: subtitleColor,
                                   fontSize: 13,
                                   height: 1.4,
                                 ),
@@ -287,9 +279,9 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        const Icon(
+                        Icon(
                           Icons.chevron_right,
-                          color: Color(0xff9CA3AF),
+                          color: mutedColor,
                         ),
                       ],
                     ),
@@ -302,11 +294,11 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       'Recettes Populaires',
                       style: TextStyle(
-                        color: Color(0xff1F2937),
+                        color: titleColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -352,8 +344,12 @@ class HomeScreen extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: const Color(0xffFFF7ED),
-                  border: Border.all(color: const Color(0xffFED7AA)),
+                  color: isDark ? const Color(0xff1F2937) : const Color(0xffFFF7ED),
+                  border: Border.all(
+                    color: isDark
+                        ? const Color(0xff374151)
+                        : const Color(0xffFED7AA),
+                  ),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
@@ -378,8 +374,8 @@ class HomeScreen extends StatelessWidget {
                         favoriteCount > 0
                             ? "Vous avez $favoriteCount recette${favoriteCount > 1 ? 's' : ''} favorite${favoriteCount > 1 ? 's' : ''}. Gardez-les sous la main pour cuisiner plus vite."
                             : "Pour un attieke parfait, rincez-le a l'eau tiede et essorez-le bien avant de le rechauffer.",
-                        style: const TextStyle(
-                          color: Color(0xff4B5563),
+                        style: TextStyle(
+                          color: subtitleColor,
                           fontSize: 14,
                           height: 1.4,
                         ),
@@ -419,7 +415,7 @@ class _CategoryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(22),
             boxShadow: [
               BoxShadow(
-                color: category.colors.first.withOpacity(0.28),
+                color: category.colors.first.withValues(alpha: 0.28),
                 blurRadius: 18,
                 offset: const Offset(0, 8),
               ),

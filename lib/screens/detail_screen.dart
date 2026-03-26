@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/recipe.dart';
+import '../services/share_service.dart';
 
 class DetailScreen extends StatefulWidget {
   final Recipe recipe;
@@ -43,6 +44,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     recipe: widget.recipe,
                     isFavorite: isFavorite,
                     onBack: () => Navigator.pop(context),
+                    onShareTap: () => _showShareSheet(context),
                     onFavoriteTap: () {
                       setState(() {
                         isFavorite = !isFavorite;
@@ -161,18 +163,98 @@ class _DetailScreenState extends State<DetailScreen> {
       ),
     );
   }
+
+  void _showShareSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (bottomSheetContext) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 46,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffE5E7EB),
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Text(
+                  'Partager ${widget.recipe.title}',
+                  style: const TextStyle(
+                    color: Color(0xff111827),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Choisissez votre option de partage preferee.',
+                  style: TextStyle(
+                    color: Color(0xff6B7280),
+                    height: 1.4,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                _ShareOptionTile(
+                  icon: Icons.chat_bubble_outline_rounded,
+                  color: const Color(0xff25D366),
+                  title: 'Partager sur WhatsApp',
+                  onTap: () async {
+                    Navigator.pop(bottomSheetContext);
+                    await ShareService.shareToWhatsApp(context, widget.recipe);
+                  },
+                ),
+                _ShareOptionTile(
+                  icon: Icons.facebook_rounded,
+                  color: const Color(0xff1877F2),
+                  title: 'Partager sur Facebook',
+                  onTap: () async {
+                    Navigator.pop(bottomSheetContext);
+                    await ShareService.shareToFacebook(context, widget.recipe);
+                  },
+                ),
+                _ShareOptionTile(
+                  icon: Icons.link_rounded,
+                  color: const Color(0xffFF6B00),
+                  title: 'Copier le lien',
+                  onTap: () async {
+                    Navigator.pop(bottomSheetContext);
+                    await ShareService.copyRecipeLink(context, widget.recipe);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 class _HeroSection extends StatelessWidget {
   final Recipe recipe;
   final bool isFavorite;
   final VoidCallback onBack;
+  final VoidCallback onShareTap;
   final VoidCallback onFavoriteTap;
 
   const _HeroSection({
     required this.recipe,
     required this.isFavorite,
     required this.onBack,
+    required this.onShareTap,
     required this.onFavoriteTap,
   });
 
@@ -206,9 +288,9 @@ class _HeroSection extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.black.withOpacity(0.45),
+                  Colors.black.withValues(alpha: 0.45),
                   Colors.transparent,
-                  Colors.black.withOpacity(0.55),
+                  Colors.black.withValues(alpha: 0.55),
                 ],
               ),
             ),
@@ -219,12 +301,17 @@ class _HeroSection extends StatelessWidget {
           left: 16,
           right: 16,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _CircleActionButton(
                 icon: Icons.arrow_back,
                 onTap: onBack,
               ),
+              const Spacer(),
+              _CircleActionButton(
+                icon: Icons.share_outlined,
+                onTap: onShareTap,
+              ),
+              const SizedBox(width: 10),
               _CircleActionButton(
                 icon: isFavorite ? Icons.favorite : Icons.favorite_border,
                 color: isFavorite ? const Color(0xffEF4444) : const Color(0xff374151),
@@ -305,7 +392,7 @@ class _CircleActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white.withOpacity(0.9),
+      color: Colors.white.withValues(alpha: 0.9),
       shape: const CircleBorder(),
       child: InkWell(
         customBorder: const CircleBorder(),
@@ -502,6 +589,66 @@ class _StepTile extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _ShareOptionTile extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  final String title;
+  final VoidCallback onTap;
+
+  const _ShareOptionTile({
+    required this.icon,
+    required this.color,
+    required this.title,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Material(
+        color: const Color(0xffF9FAFB),
+        borderRadius: BorderRadius.circular(18),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(18),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+            child: Row(
+              children: [
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(icon, color: color),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      color: Color(0xff111827),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                const Icon(
+                  Icons.chevron_right,
+                  color: Color(0xff9CA3AF),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

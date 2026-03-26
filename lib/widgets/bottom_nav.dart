@@ -14,12 +14,16 @@ class BottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xff1F2937) : Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Color(0x14000000),
+            color: isDark
+                ? const Color(0x33000000)
+                : const Color(0x14000000),
             blurRadius: 20,
             offset: Offset(0, -4),
           ),
@@ -88,7 +92,12 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = selected ? const Color(0xffFF6B00) : const Color(0xff9CA3AF);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final color = selected
+        ? const Color(0xffFF6B00)
+        : isDark
+        ? const Color(0xffD1D5DB)
+        : const Color(0xff9CA3AF);
 
     return InkWell(
       borderRadius: BorderRadius.circular(20),

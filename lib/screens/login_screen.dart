@@ -7,8 +7,14 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final titleColor = isDark ? Colors.white : const Color(0xff111827);
+    final subtitleColor = isDark
+        ? const Color(0xffD1D5DB)
+        : const Color(0xff6B7280);
+
     return Scaffold(
-      backgroundColor: const Color(0xffF8FAFC),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(24, 20, 24, 32),
@@ -31,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 alignment: Alignment.center,
                 child: const Text(
-                  'dA',
+                  "O'",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 28,
@@ -40,19 +46,19 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              const Text(
+              Text(
                 'Connexion',
                 style: TextStyle(
-                  color: Color(0xff111827),
+                  color: titleColor,
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 'Connectez-vous pour retrouver vos favoris et personnaliser votre experience.',
                 style: TextStyle(
-                  color: Color(0xff6B7280),
+                  color: subtitleColor,
                   fontSize: 15,
                   height: 1.5,
                 ),
@@ -122,9 +128,9 @@ class LoginScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     "Vous n'avez pas de compte ? ",
-                    style: TextStyle(color: Color(0xff6B7280)),
+                    style: TextStyle(color: subtitleColor),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -168,13 +174,19 @@ class _AuthField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final labelColor = isDark ? const Color(0xffE5E7EB) : const Color(0xff374151);
+    final fillColor = isDark ? const Color(0xff1F2937) : Colors.white;
+    final iconColor = isDark ? const Color(0xffD1D5DB) : const Color(0xff9CA3AF);
+    final borderColor = isDark ? const Color(0xff374151) : const Color(0xffE5E7EB);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
-            color: Color(0xff374151),
+          style: TextStyle(
+            color: labelColor,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -183,17 +195,18 @@ class _AuthField extends StatelessWidget {
           obscureText: obscureText,
           decoration: InputDecoration(
             hintText: hint,
-            prefixIcon: Icon(icon, color: const Color(0xff9CA3AF)),
+            hintStyle: TextStyle(color: iconColor),
+            prefixIcon: Icon(icon, color: iconColor),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: fillColor,
             contentPadding: const EdgeInsets.symmetric(vertical: 18),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(18),
-              borderSide: const BorderSide(color: Color(0xffE5E7EB)),
+              borderSide: BorderSide(color: borderColor),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(18),
-              borderSide: const BorderSide(color: Color(0xffE5E7EB)),
+              borderSide: BorderSide(color: borderColor),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(18),

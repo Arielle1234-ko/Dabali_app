@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../models/recipe.dart';
+import '../services/share_service.dart';
 import 'login_screen.dart';
+import 'settings_screen.dart';
 import 'signup_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -14,10 +16,13 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final surfaceColor = isDark ? const Color(0xff1F2937) : Colors.white;
+
     final favoriteCount = recipes.where((recipe) => recipe.isFavorite).length;
 
     return Scaffold(
-      backgroundColor: const Color(0xffF5F5F5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -94,11 +99,11 @@ class ProfileScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: surfaceColor,
                       borderRadius: BorderRadius.circular(24),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
+                          color: Colors.black.withValues(alpha: 0.08),
                           blurRadius: 20,
                           offset: const Offset(0, 8),
                         ),
@@ -139,14 +144,21 @@ class ProfileScreen extends StatelessWidget {
                           iconColor: const Color(0xffEA580C),
                           backgroundColor: const Color(0xffFFEDD5),
                           title: 'Parametres',
-                          onTap: () => _showMessage(context, 'Parametres'),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const SettingsScreen(),
+                              ),
+                            );
+                          },
                         ),
                         _ProfileActionTile(
                           icon: Icons.share_outlined,
                           iconColor: const Color(0xff2563EB),
                           backgroundColor: const Color(0xffDBEAFE),
                           title: "Partager l'app",
-                          onTap: () => _showMessage(context, "Partager l'app"),
+                          onTap: () => _shareApp(context),
                         ),
                         _ProfileActionTile(
                           icon: Icons.star_outline,
@@ -199,6 +211,14 @@ class ProfileScreen extends StatelessWidget {
   void _showMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
+    );
+  }
+
+  void _shareApp(BuildContext context) {
+    ShareService.copyCustomText(
+      context,
+      "Decouvrez O'dAbAli, votre compagnon gourmand pour explorer de delicieuses recettes ivoiriennes : https://odabali.app",
+      successMessage: "Lien de l'application copie",
     );
   }
 }

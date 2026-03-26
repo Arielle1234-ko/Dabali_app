@@ -18,21 +18,26 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final surfaceColor = isDark ? const Color(0xff1F2937) : Colors.white;
+
     final favoriteRecipes =
         recipes.where((recipe) => recipe.isFavorite).toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xffF5F5F5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
           Container(
             width: double.infinity,
             padding: const EdgeInsets.fromLTRB(16, 52, 16, 16),
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration: BoxDecoration(
+              color: surfaceColor,
               border: Border(
                 bottom: BorderSide(
-                  color: Color(0xffE5E7EB),
+                  color: isDark
+                      ? const Color(0xff374151)
+                      : const Color(0xffE5E7EB),
                 ),
               ),
             ),
@@ -98,10 +103,14 @@ class _FavoriteListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: Theme.of(context).brightness == Brightness.dark
+          ? const Color(0xff1F2937)
+          : Colors.white,
       borderRadius: BorderRadius.circular(20),
       elevation: 1,
-      shadowColor: Colors.black.withOpacity(0.05),
+      shadowColor: Colors.black.withValues(
+        alpha: Theme.of(context).brightness == Brightness.dark ? 0.18 : 0.05,
+      ),
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
         onTap: onTap,
